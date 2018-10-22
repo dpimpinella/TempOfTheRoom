@@ -23,7 +23,6 @@ class Index(FormView):
         data = data["query"]
         return super().form_valid(form)
 
-
 class Results(TemplateView):
     template_name = 'tweet_sentiment/results.html'
     
