@@ -16,11 +16,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include
 from django.urls import path
-from django.urls import re_path
-
 
 
 urlpatterns = [
+    path('tweet_sentiment/', include('tweet_sentiment.urls')),
     path('admin/', admin.site.urls),
-    re_path(r'^', include('tweet_sentiment.urls')),
 ]
