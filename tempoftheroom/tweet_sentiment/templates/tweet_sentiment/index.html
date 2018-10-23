@@ -1,15 +1,29 @@
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'tweet_sentiment/style.css' %}">
+
 <html>
     <head>
         <meta charset="utf-8">
         <title>Temperature of the Room</title>
     </head>
     <body>
-        <form action="results" method="post">
-                {% csrf_token %}
-                {{ form }}
-                <input type="submit" value="Submit" />
-        </form>
-
-        <h2> {{ test }} </h2>
+        <div id="maindiv">
+            <h1>
+                Tweet Sentiment Analysis
+            </h1>
+            <div id="synopsis">
+                <p> 
+                This webapp uses the Twitter Search API to grab tweets based on a given search term, sends them to the Text-Processing Sentiment Analysis API, and returns the results.
+                </p>
+            </div>
+            <p>Enter a search query below:</p>
+            <form action="results" method="post">
+                    {% csrf_token %}
+                    {{ form }}
+                    <br><br>
+                    <input type="submit" value="Submit" />
+            </form>
+        </div>
     </body>
 </html>

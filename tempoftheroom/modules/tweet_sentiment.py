@@ -8,8 +8,8 @@ class OAuthToken:
     Twitter API requests.
     """
     API_OAUTH_ENDPOINT = 'https://api.twitter.com/oauth2/token'
-    API_CONSUMER_KEY = 'bym5ha8MQewR5fEqy2dZwRdBI'
-    API_SECRET_KEY = 'VafZzWm4mRvwhZ4v9wKrgAtqneMhfVrHywjcdCR9auoUJ2JcMa'
+    API_CONSUMER_KEY = ''
+    API_SECRET_KEY = ''
 
     def __init__(self):
         self.bearer_token = self.request_bearer_token()
@@ -42,26 +42,38 @@ class TwitterSearch:
     API_SEARCH_ENDPOINT = 'https://api.twitter.com/1.1/search/tweets.json?q='
 
     def __init__(self, query, token):
-        self.query = query
+        self.query = self.modify_query(query)
         self.token = token
-        self.search_results = self.send_search()
-        self.tweet_text = self.find_text()
+        self.count = 2
+        self.lang = 'en'
+        self.tweet_mode = 'extended'
+        self.Url_suffix = self.build_suffix()
+        self.search_results = self.send_search(token)
+        self.tweet_text = self.find_text()        
 
-    def send_search(self):
+    def modify_query(self,query):
+        modified_query = "{} -filter:retweets -filter:replies".format(query)
+        return modified_query
+
+    def send_search(self,token):
         encoded_query = urllib.parse.quote(self.query.encode('utf-8'))
-        url = self.API_SEARCH_ENDPOINT + encoded_query
+        url = self.API_SEARCH_ENDPOINT + encoded_query + self.Url_suffix
         headers = {
             'User-Agent':'TemperatureOfTheRoom',
-            'Authorization':'Bearer ' + self.token.bearer_token,
+            'Authorization':'Bearer ' + self.token,
             'Content-Type':'application/x-www-form-urlencoded;charset=UTF-8'}
         response = requests.get(url, headers = headers)
         results = json.loads(response.content)
         return results
+
+    def build_suffix(self):
+        suffix = '&count={}&lang={}&tweet_mode={}'.format(self.count, self.lang, self.tweet_mode)
+        return suffix
     
     def find_text(self):
         tweet_text = []
         for item in self.search_results['statuses']:
-            tweet_text.append(item['text'])
+            tweet_text.append(item['full_text'])
         return tweet_text
 
 class SentimentAnalysis:
@@ -87,6 +99,12 @@ class SentimentAnalysis:
             headers = headers)
         sentiment_result = json.loads(response.content)
         sentiment_result = sentiment_result['label']
+        if (sentiment_result == 'pos'):
+            sentiment_result = 'Positive'
+        if (sentiment_result == 'neg'):
+            sentiment_result = 'Negative'
+        if (sentiment_result == 'neutral'):
+            sentiment_result = 'Neutral'
         return sentiment_result
     
     def total_results(self):

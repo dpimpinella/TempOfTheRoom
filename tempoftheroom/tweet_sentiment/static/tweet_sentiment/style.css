@@ -1,0 +1,28 @@
+body {
+    font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+    padding: 30px;
+    background-color: #ADD8E6;
+}
+
+#maindiv {
+    width: 900px;
+    margin: 0 auto;
+    text-align: center;
+    font-size: 1em;
+}
+#synopsis {
+    width: 600px;
+    margin: auto;
+    text-align: left;
+    text-indent: 2em;
+}
+li { 
+    text-align: left;
+}
+input[type='text'] {
+    font-size:1.5em;
+    width: 200px;
+}
+input[type='submit']{
+    width: 150px;
+}

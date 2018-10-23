@@ -1,1 +1,21 @@
-<h1> {{ query }} </h1>
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'tweet_sentiment/style.css' %}">
+<body>
+    <div id="maindiv">
+        <h1> Tweet sentiment results for '{{ query }}': </h1>
+        {% if results %}
+        <ul>
+            {% for result in results %}
+                <li>
+                    "{{result.0}}" <br><br>
+                    {{result.1}}
+                </li>
+                <br>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+{% else %}
+<p> There are no results</p>
+{% endif %}
