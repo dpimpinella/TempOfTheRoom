@@ -4,10 +4,12 @@
         <title>Temperature of the Room</title>
     </head>
     <body>
-        <form method="post">
+        <form action="results" method="post">
                 {% csrf_token %}
                 {{ form }}
                 <input type="submit" value="Submit" />
         </form>
+
+        <h2> {{ test }} </h2>
     </body>
 </html>
