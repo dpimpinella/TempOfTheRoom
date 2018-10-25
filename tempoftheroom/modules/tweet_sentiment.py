@@ -186,7 +186,8 @@ class SentimentAnalysis:
         sentiment_result = sentiment_result['label']
 
         # Change sentiment labels to full words.
-        # TODO Move this to view, since this is only for display purposes.
+        # TODO Move this to view or template, since this is only for display 
+        # purposes.
         if (sentiment_result == 'pos'):
             sentiment_result = 'Positive'
         if (sentiment_result == 'neg'):
