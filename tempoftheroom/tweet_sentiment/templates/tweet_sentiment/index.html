@@ -14,18 +14,21 @@
             </h1>
             <div id="synopsis">
                 <p> 
-                This webapp uses the Twitter Search API to grab tweets based on a given search term, sends them to the Text-Processing Sentiment Analysis API, and returns the results.
+                This webapp uses the Twitter Search API to get tweets based on 
+                a given search term, sends the Tweets to the Text-Processing 
+                Sentiment Analysis API, and returns the results. The Sentiment 
+                Analysis API uses NTLK 2.0.4 powered process to classify text 
+                as positive, negative, or neutral.
                 </p>
             </div>
             <p>Enter a search query below:</p>
             <form action="results" method="post">
-                    {% csrf_token %}
-                    {{ form }}
-                    <br><br>
-                    <input type="submit" value="Submit" />
+                {% csrf_token %}
+                {{ form }}
+                <br>
+                <br>
+                <input type="submit" value="Submit" />
             </form>
-            {% include "tweet_sentiment/embedded_tweet.html" %}   
         </div>
-
     </body>
 </html>

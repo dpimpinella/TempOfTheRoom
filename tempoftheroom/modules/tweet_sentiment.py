@@ -16,8 +16,8 @@ class OAuthToken:
         API_SECRET_KEY: See above.
     """
     API_OAUTH_ENDPOINT = 'https://api.twitter.com/oauth2/token'
-    API_CONSUMER_KEY = 'bym5ha8MQewR5fEqy2dZwRdBI'
-    API_SECRET_KEY = 'VafZzWm4mRvwhZ4v9wKrgAtqneMhfVrHywjcdCR9auoUJ2JcMa'
+    API_CONSUMER_KEY = ''
+    API_SECRET_KEY = ''
 
     def __init__(self):
         """Initializes OAuthToken."""
@@ -86,6 +86,7 @@ class TwitterSearch:
             search_results: A dictionary converted from search APIs JSON 
             response.
             tweet_text: A list of strings containing the text from Tweets.
+            urls: A list of strings containing URLs for each Tweet.
             """
         self.query = self._modify_query(query)
         self.bearer_token = bearer_token
@@ -94,7 +95,8 @@ class TwitterSearch:
         self.tweet_mode = 'extended'
         self.url_suffix = self._build_suffix()
         self.search_results = self.send_search(bearer_token)
-        self.tweet_text = self._find_text()        
+        self.tweet_text = self._find_text()  
+        self.urls = self._create_urls()      
 
     def _modify_query(self,query):
         """Modifies query to exclude retweets and replies."""
@@ -143,6 +145,56 @@ class TwitterSearch:
             tweet_text.append(item['full_text'])
         return tweet_text
 
+    def _create_urls(self):
+        """"Stores the URLs for each Tweet in a list.
+
+        Returns:
+            urls: A list of URLs.
+        """
+
+        urls = []
+        for item in self.search_results['statuses']:
+            url = 'https://twitter.com/' + item['user']['screen_name'] + '/status/' + item['id_str'] 
+            urls.append(url)
+        return urls
+
+class Oembed:
+    """Sends URLs to Twitter oEsmbed endpoint in order to get tweet HTML so that 
+    tweets may be embedded in web page
+
+    Attributes:
+        API_OEMBED_ENDPOINT: URL for statuses/oembed endpoint.
+    """
+    API_OEMBED_ENDPOINT = 'https://publish.twitter.com/oembed?url='
+
+    def __init__(self, tweet_urls):
+        """ Initializes Oembed object.
+        
+        Args:
+            tweet_urls: A list of URL-encoded Tweet URLs.
+        """
+        self.tweet_urls = tweet_urls
+
+    def get_html(self):
+        """ Sends HTTP GET to oEmbed endpoint.
+
+        Returns:
+            html: A list containing HTML for each Tweet so that they can be 
+            embedded.
+        """
+        html = []
+        for url in self.tweet_urls:
+
+            #Introduce parameters to center embedded Tweet, hide pictures/video
+            url = self.API_OEMBED_ENDPOINT + url +'&align=center&hide_media=true'
+            response = requests.get(url)
+            results = json.loads(response.content)
+            a_html = results['html']
+            html.append(a_html)
+        
+        return html
+
+
 class SentimentAnalysis:
     """Sends Tweet text to http://text-processing.com/api/sentiment/ and stores
     the response.
@@ -174,7 +226,7 @@ class SentimentAnalysis:
             depending on the 'label' in API response.
         """
         headers = {
-            'X-Mashape-Key':'Zx3Hnd9BrvmshEBx4i5UfCZlJqHKp1ddegSjsnmdXY62V9Ndsh',
+            'X-Mashape-Key':'key',
 			'Content-Type':'application/x-www-form-urlencoded',
 			'Accept':'application/json'}
         body = {'language':'english', "text":text}

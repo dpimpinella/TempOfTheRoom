@@ -1,28 +1,40 @@
 body {
     font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
-    padding: 30px;
-    background-color: #ADD8E6;
-}
-
-#maindiv {
-    width: 900px;
-    margin: 0 auto;
-    text-align: center;
-    font-size: 1em;
+    font-weight: bolder;
+    padding: 0px;
+    background-color: #05E9FF;
 }
 #synopsis {
-    width: 600px;
+    width: 900px;
     margin: auto;
     text-align: left;
     text-indent: 2em;
 }
-li { 
-    text-align: left;
+#maindiv {
+    padding-top: 20px;
+    width: 1200px;
+    margin: 0 auto;
+    text-align: center;
 }
 input[type='text'] {
-    font-size:1.5em;
+    font-size: 1em;
     width: 200px;
 }
 input[type='submit']{
     width: 150px;
+}
+table {
+    margin: auto;
+    text-align: center;
+    border-collapse: separate;
+    border-spacing: 30px;
+    font-size: 1.5em;
+    font-weight: bold;
+}
+td {
+    text-align: center;
+    background-color: whitesmoke;
+    padding: 20px;
+    width: 50%;
+    border-radius: 20px;
 }
