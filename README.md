@@ -9,7 +9,7 @@ User enters search query -> query is sent to Search API -> the Tweet text is pul
 
 ## Part 1: Tweet Sentiment module
 
-This module contains Python code that gets authentication in order to send requests to Twitter, sends the requests, and processes the responses. It also handles sending requests to and processing responses from the Sentiment Analysis API.
+This module contains Python code that gets authentication credentials in order to send requests to Twitter, sends the requests, and processes the responses. It also handles sending requests to and processing responses from the Sentiment Analysis API.
 
 Twitter's Search API is extensive, so this could be modified to conduct searches with different criteria, or it could be changed to interact with one of the many other APIs Twitter offers.
 
