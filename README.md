@@ -15,7 +15,7 @@ Twitter's Search API is extensive, so this could be modified to conduct searches
 
 ## Part 2: Displaying the results in a browser with Django
 
-The second part of the project was to create a way for the user to interface with the Tweet Sentiment module. This was done with Django, so that the user interaction could take place within a web browser.  The application allows the user to submit a query, and then displays the results of the sentiment analysis with the corresponding text from each Tweet.
+The second part of the project was to create a way for the user to interface with the Tweet Sentiment module. This was done with Django, so that the user interaction could take place within a web browser.  The application allows the user to submit a query, and then displays the results of the sentiment analysis with the corresponding Tweet.
 
 <p align="center">
   <img width="640" height="400" src="https://github.com/dpimpinella/Python2/blob/master/API%20Project/images/walkthrough_v2.gif">
